@@ -1,0 +1,12 @@
+target/
+node_modules/
+.idea/
+*.iml
+/AAAlogs/
+/logs/
+.gradle/
+build/
+classes/
+/VERSION.md
+
+gradle/wrapper/

@@ -1,0 +1,25 @@
+<idea-plugin>
+    <id>org.saidake.simi-init</id>
+    <name>simi-init</name>
+    <vendor email="saidake@qq.com" >saidake</vendor>
+
+    <description><![CDATA[
+        init project files.<br>
+        ]]></description>
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Smp Notification"
+                           displayType="BALLOON"/>
+    </extensions>
+    <idea-version since-build="2021.3" until-build="2023.*"/>
+    <actions>
+        <!-- Add your actions here -->
+        <action id="InitProjectId" class="com.simi.plugin.init.InitProject" text="Smp Init" icon="/icons/deer15.png">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl F10"/>
+        </action>
+    </actions>
+</idea-plugin>

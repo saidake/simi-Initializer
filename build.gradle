@@ -1,0 +1,46 @@
+plugins {
+    id 'org.jetbrains.intellij' version '0.7.3'
+    id 'java'
+}
+
+group 'com.simi.plugin'
+version '2.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    implementation 'ch.qos.logback:logback-classic:1.4.7'
+    implementation 'ch.qos.logback:logback-core:1.4.7'
+    implementation 'ch.qos.logback:logback-access:1.4.7'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    implementation 'org.dom4j:dom4j:2.1.4'
+    implementation 'jaxen:jaxen:2.0.0'
+    compileOnly 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    implementation 'com.simi:simi-common-util:1.0'
+}
+runIde {
+    jvmArgs '--illegal-access=permit'
+}
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+    version = '2021.3.1'
+    updateSinceUntilBuild = false
+}
+patchPluginXml {
+    changeNotes = """
+      1. can specify current env in simi-init.xml now. <br>
+      2. can append new attributes when modifing xml file."""
+}
+test {
+    useJUnitPlatform()
+}
+
+publishPlugin {
+    token intellijPublishToken
+}

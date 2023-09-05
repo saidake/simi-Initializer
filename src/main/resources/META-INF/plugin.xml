@@ -1,0 +1,44 @@
+<idea-plugin>
+    <id>org.saidake.simi-init</id>
+    <name>Smp Init</name>
+    <vendor email="scottdavisddd@gmail.com" >saidake</vendor>
+
+    <description><![CDATA[
+        <a href="https://github.com/saidake/simi/tree/release/simi-init-2.0">Plugin Usage Documentation</a><br>
+        Format the files in the project according to the various rules provided in the default config file: ~/.smp/simi-init.yml.<br>
+        Tips: The user configuration directory for Windows is "C:\Users\&lt;username&gt;\.smp"<br>
+        <ul>
+            <li>Merge the configured properties file with the specified properties file</li>
+            <li>Replace or append strings to the file you need using multiple defined formatting rules.</li>
+            <li>Generate backup files without worrying about losing source file information.</li>
+            <li>Support the insertion or replacement of labels in the specified location of pom files.</li>
+        </ul>
+        ]]></description>
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="Smp Notification"
+                           displayType="BALLOON"/>
+    </extensions>
+    <!--    IntelliJ IDEA Ultimate IU-213.5744.223 (2021.3)-->
+    <idea-version since-build="213.5744.223" until-build="231.*"/>
+    <actions>
+        <!-- Add your actions here -->
+<!--        <action id="InitProjectId" class="com.simi.plugin.init.InitGroup" text="Smp Init" icon="/icons/deer15.png">-->
+<!--            <add-to-group group-id="ToolsMenu" anchor="last"/>-->
+<!--            <keyboard-shortcut keymap="$default" first-keystroke="ctrl F10"/>-->
+<!--        </action>-->
+        <group
+                id="com.simi.plugin.init.InitGroup"
+                class="com.simi.plugin.init.InitGroup"
+                popup="true"
+                text="Smp Init"
+                description="SMP init project action"
+                icon="/icons/deer15.png">
+            <add-to-group
+                    group-id="ToolsMenu"
+                    anchor="first"/>
+        </group>
+    </actions>
+</idea-plugin>
