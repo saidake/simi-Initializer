@@ -1,4 +1,4 @@
-## <font color="yellow">Simi Init</font>
+## <font color="yellow">Simi Initializer</font>
 Init project files by the default config file: .simi/simi-initializer.yml.<br/>
 
 Prerequisite:<br/>
