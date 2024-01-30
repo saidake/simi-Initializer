@@ -13,7 +13,7 @@
             <li>Support the insertion or replacement of labels in the specified location of pom files.</li>
         </ul>
         <br>
-        <a href="https://github.com/saidake/simi/tree/release/simi-init-2.0">Plugin Usage Documentation</a><br>
+        <a href="https://github.com/saidake/simi-Initializer/tree/release/simi-initializer-2.1.1">Plugin Usage Documentation</a><br>
         ]]></description>
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
