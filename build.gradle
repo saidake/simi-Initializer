@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.simi.plugin'
-version '2.0'
+version '2.1.1'
 
 repositories {
     mavenLocal()
@@ -34,8 +34,10 @@ intellij {
 }
 patchPluginXml {
     changeNotes = """
-      1. can specify current env in simi-init.xml now. <br>
-      2. can append new attributes when modifing xml file."""
+      1. xml file support appending tags to specific position. <br>
+      2. rename the plugin to Simi Initializer. <br>
+      3. rename the concifuration file to simi-initializer.yml. <br>
+      """
 }
 test {
     useJUnitPlatform()

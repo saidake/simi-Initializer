@@ -1,13 +1,13 @@
 ## <font color="yellow">Simi Init</font>
-Init project files by the default config file: .smp/smp.yml.<br/>
+Init project files by the default config file: .simi/simi-initializer.yml.<br/>
 
 Prerequisite:<br/>
-1. Create the configuration file in the user directory: ~/.smp/simi-init.yml<br/>
-<font color="gray">Tips: The user configuration directory for Windows is "C:\\Users\\\<username>\\\.smp"</font><br/>
-2. Add a writing rule to the file ~/.smp/simi-init.yml.<br/>
+1. Create the configuration file in the user directory: ~/.simi/simi-initializer.yml<br/>
+<font color="gray">Tips: The user configuration directory for Windows is "C:\\Users\\\<username>\\\.simi"</font><br/>
+2. Add a writing rule to the file ~/.simi/simi-initializer.yml.<br/>
    <font color="gray">Tips: For the first usage, you can try adding only one rule in the ruleList, and then executing the plugin.</font><br/>
    <font color="gray">Try the simplest java-annotation type to add "//" before each line in your read file.</font><br/>
-3. Execute the plugin in the intellij idea menu: <em>Tools / Smp Init</em>, and then you can see the execution result prompt in the lower right corner. 
+3. Execute the plugin in the intellij idea menu: <em>Tools / Simi Initializer</em>, and then you can see the execution result prompt in the lower right corner. 
 #### write types:
 <table>
     <tr>
@@ -40,16 +40,16 @@ Prerequisite:<br/>
     <tr>
         <td>line-replace</td>
         <td>
-            Replace string with the RP file, The left value is the lineNumber,<br/> 
-            The right value is the replace content.<br/>
+            Replace string with the RP file,  <br/>
+            Please refer to the introduction of the RP file rule format below. <br/>
             example: 2%%%String tt="xxx";
         </td>
     </tr>
     <tr>
         <td>line-append</td>
         <td>
-            Append string with the RP file, The left value is the lineNumber,<br/> 
-            The right value is the append content.<br/>
+            Append string with the RP file,  <br/>
+            Please refer to the introduction of the RP file rule format below. <br/>
             example: 2%%%Integer tt=99;
         </td>
     </tr>
@@ -64,8 +64,8 @@ Prerequisite:<br/>
 </table>
 
 #### global env:
-You can access the env variable in the <strong>simi-init.yml</strong> file,<br/> 
-or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the simi-init.yml<br/>
+You can access the env variable in the <strong>simi-initializer.yml</strong> file,<br/> 
+or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the simi-initializer.yml<br/>
 <table>
     <tr>
         <th>ENV</th>
@@ -88,70 +88,95 @@ or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</
         <td>UAT</td>
     </tr>
     <tr>
-        <td>${smp}         </td>
-        <td>The "~/.smp" configuration path.</td>
-        <td>C:\\Users\\&lt;username&gt;\\.smp</td>
+        <td>${simi}         </td>
+        <td>The "~/.simi" configuration path.</td>
+        <td>C:\\Users\\&lt;username&gt;\\.simi</td>
     </tr>
 </table>
 
-#### simi-init.yml example:
+#### simi-initializer.yml example:
 ```yaml
 project:
   - name: simi-oracle
     enable: true
-    path: C:\\Users\\saidake\\Desktop\\DevProject\\simi\\simi-service\\simi-oracle   # Parent project folder
+    # Parent project folder
+    path: C:\\Users\\saidake\\Desktop\\DevProject\\simi\\simi-service\\simi-oracle   
     envList: UAT,DEV,PROD
     defaultEnv: UAT
-    pomProjectNameCheck: true         # when executing this path,  check whether Maven project name is project name based on the pom file.
-                                      # At this point, then project.path is optional.
+     # when executing this path, 
+     # check whether Maven project name is project name based on the pom file (Optional).
+    pomProjectNameCheck: true        
     ruleList:
-      - write: src/main/resources/application-local.properties    # The relative path to write the file.
-        read: /${project.name}/${project.env}                     # Read folder.
-         # When the path starts with "/", automatically concatenate the configuration path "~/.smp"
-         # Tips: The user configuration directory for Windows is "C:\Users\<username>\.smp"
-        type: append-properties-folder                            
-        backup: current   # Create a backup file in the current file directory.(The default backup value is "current")
-        once: true        # Only write once, It will determine whether it is the first write based on whether the backup file exists.
+      # Read all properties files in the directory and append them to the writing properties file.  
+      - type: append-properties-folder
+        # The relative path to write the file.
+        write: src/main/resources/application-local.properties
+        # Read folder.
+        # When the path starts with "/", automatically concatenate the configuration path "~/.simi"
+        # Tips: The user configuration directory for Windows is "C:\Users\<username>\.simi"
+        read: /${project.name}/${project.env}                     
+        # Create a backup file in the current file directory.(The default backup value is "current")
+        backup: current
+        # Only write once, 
+        # It will determine whether it is the first write based on whether the backup file exists.
+        once: true        
 
-      - write: src/main/resources/application-dev.properties     # The relative path to write the file.
-        read: /${project.name}/test.properties                   # Read property file.
-        type: append-properties
-        backup: smp             # Create a backup file in the default smp backup folder.(~/.smp/AAAbackup)                                  
-        activeEnvList: DEV,UAT             # It takes effect in the DEV and UAT environment and defaults to all environments.
-
-      - write: src/main/resources/logback.xml
-        read: /${project.name}/logback.xml
-        type: replace-all                                         
-
-      - write: src/main/resources/logback.xml       # The same file can be written multiple times.
-        type: replace-string                                      
-        rpRuleList:                                 # Use rpRuleList instead of rp file.(it is valid anywhere an RP file is used)
-          - fffsfsfd/////%%%ddfsfsfsfsfs
-          - fffsfsfd/////%%%ddfsfsfsfsfs
-
-      - write: src/main/resources/logback.xml
-        type: replace-string
-        read: /${project.name}/logback-replace.rp   # Use the rp rule file instead manually setting one.
+      # Append a read properties file to the writing properties file 
+      - type: append-properties
+        # The relative path to write the file.
+        write: src/main/resources/application-dev.properties
+        # Read property file.
+        read: /${project.name}/test.properties                   
+        # Create a backup file in the default simi backup folder.(~/.simi/AAAbackup)   
+        backup: simi
+        # It takes effect in the DEV and UAT environment and defaults to all environments.
+        activeEnvList: DEV,UAT             
         
-      - write: src/main/resources/logback.xml
+      # Replace all content of the writing file with the read file.
+      - type: replace-all 
+        write: src/main/resources/logback.xml
+        read: /${project.name}/logback.xml
+                                                
+
+      # Replace matched content with the RP rule list manually defined or rp rule file, 
+      # Please refer to the introduction of the RP file rule format below.
+      - type: replace-string
+        # The same file can be written multiple times.
+        write: src/main/resources/logback.xml
+        # Use rpRuleList instead of rp file.(it is valid anywhere an RP file is used)
+        rpRuleList:                                 
+          - fffsfsfd/////%%%ddfsfsfsfsfs
+          - fffsfsfd/////%%%ddfsfsfsfsfs
+
+      - type: replace-string
+        write: src/main/resources/logback.xml
+         # Use the rp rule file instead manually setting one.
+        read: /${project.name}/logback-replace.rp   
+        
+      # Append all contents of the read file to the write file.
+      - type: append-string  
+        write: src/main/resources/logback.xml
         read: /${project.name}/logback.txt
-        type: append-string                                       
-
-      - write: src/main/resources/logback.xml
+      #  Replace string with the RP file
+       # Please refer to the introduction of the RP file rule format below.
+      - type: line-replace
+        write: src/main/resources/logback.xml
         read: /${project.name}/logback.rp
-        type: line-replace                                        
-
-      - write: src/main/resources/logback.xml
+                                                
+      # Append string with the RP file, 
+      # Please refer to the introduction of the RP file rule format below.
+      - type: line-append
+        write: src/main/resources/logback.xml
         read: /${project.name}/logback.rp
-        type: line-append                                         
-
-      - write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
-        type: java-annotation                                     
-
-      - write: src/test/resources/simi-test/pom.xml
+                                                 
+      # Each line of the write file will be preceded by '//'
+      - type: java-annotation
+        write: src\main\java\com\saidake\common\core\util\file\SmpTestBackupUtils.java
+      # Write xml file, Please refer to the introduction of the xml-append.xml file format below.
+      - type: xml  
+        write: src/test/resources/simi-test/pom.xml
         read: /${project.name}/xml-append.xml
-        type: xml                                                 
-
+                                                       
   - name: simi-common-core
     path: C:\Users\saidake\Desktop\DevProject\simi\simi-common\simi-common-core
     envList: UAT,DEV,PROD
@@ -167,40 +192,50 @@ Key values are separated by '%%%'<br/>
 ```text
 <contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>
 sourceValue%%%ReplaceValue
-//source//abc.cert%%%${smp}/abc.cert
+//source//abc.cert%%%${simi}/abc.cert
 ```
 
 #### XML rule file(.xml) example: 
 ```xml
 <root>
     <replace xpath="/project/dependencyManagement/dependencies/dependency">    
-        <!-- The xpath of the replace tag-->
-        <ele xpath="artifactId" xpath-value="maven-compiler-plugin" append-if-not-exists="true"
-        custom1="xxx" custom2="xxx" 
-        >  
-            <!-- Use the artifactId xpath search under dependency, and if the value is equal to 'maven-compiler-plugin', replace it.-->
-            <!-- In addition to these three setting attributes, other attributes will be added to the discovered replacement element. -->
-            <!-- The attributes custom1, custom2 will be added to the element "dependency"-->
+        <!-- 
+          xpath:  The xpath of the "replace" tag
+        -->
+        <ele 
+                xpath="artifactId" 
+                xpath-value="maven-compiler-plugin" 
+                append-if-not-exists="true" 
+                custom1="xxx"  
+                custom2="xxx" 
+        > 
+            <!-- 
+              xpath:                  tag name to use for matching 
+              xpath-value:            matched tag value 
+                  (and if the value is equal to 'maven-compiler-plugin', replace whole dependency tag.)
+              append-if-not-exists:   Change replace to append
+              custom1 / custom2...:   Other attributes will be appended to the tag matching the xpath of the "replace" tag
+            -->
             <dependency>
-                <groupId>org.saidake.mmp</groupId>
-                <artifactId>smp</artifactId>
-                <version>${lombok.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.saidake.mmp</groupId>
-                        <artifactId>cc</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>org.saidake.simi</groupId>
+                <artifactId>simi</artifactId>
+                <version>1.0</version>
             </dependency>
         </ele>
     </replace>
-    <append parent-xpath="/project/dependencies">   
-        <!-- The xpath of the parent tag of the replace tag-->
-        <dependency>
-            <groupId>org.saidake.mmp</groupId>
-            <artifactId>smp</artifactId>
-            <version>baba</version>
-        </dependency>
+    <append 
+            parent-xpath="/project/dependencies" 
+            position="top"
+    >   
+        <!-- 
+          parent-xpath: The xpath of the parent tag.
+          position:     The position to be appended.
+        -->
+       <dependency>
+          <groupId>org.saidake.simi</groupId>
+          <artifactId>simi</artifactId>
+          <version>1.0</version>
+       </dependency>
     </append>
 </root>
 ```
