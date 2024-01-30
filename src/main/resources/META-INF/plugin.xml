@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>org.saidake.simi-init</id>
+    <id>org.saidake.smp-init</id>
     <name>Simi Initializer</name>
     <vendor email="scottdavisddd@gmail.com" >saidake</vendor>
 
