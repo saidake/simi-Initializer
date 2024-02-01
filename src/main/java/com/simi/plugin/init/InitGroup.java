@@ -6,13 +6,11 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.simi.common.util.file.SimiInitializer;
-import com.simi.common.util.file.support.yaml.ProjectInfo;
 import com.simi.common.util.file.support.yaml.SimiYmlProperties;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class InitGroup extends DefaultActionGroup {
 
