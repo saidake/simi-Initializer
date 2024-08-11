@@ -187,7 +187,7 @@ project:
         once: true
 ```
 
-#### RP rul file(.rp) example: 
+#### RP rule file(.rp) example: 
 Key values are separated by '%%%'<br/>
 ```text
 <contextName>logback</contextName>%%%<contextName>logback-replace-content</contextName>

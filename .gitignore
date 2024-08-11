@@ -8,5 +8,5 @@ node_modules/
 build/
 classes/
 /VERSION.md
-
+JIRA.md
 gradle/wrapper/
