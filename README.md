@@ -1,10 +1,10 @@
 ## <font color="yellow">Simi Initializer</font>
 Init project files by the default config file: .simi/simi-initializer.yml.<br/>
 
-Prerequisite:<br/>
+Prerequisites:<br/>
 1. Create the configuration file in the user directory: ~/.simi/simi-initializer.yml<br/>
 <font color="gray">Tips: The user configuration directory for Windows is "C:\\Users\\\<username>\\\.simi"</font><br/>
-2. Add a writing rule to the file ~/.simi/simi-initializer.yml.<br/>
+2. Add a write rule to the file ~/.simi/simi-initializer.yml.<br/>
    <font color="gray">Tips: For the first usage, you can try adding only one rule in the ruleList, and then executing the plugin.</font><br/>
    <font color="gray">Try the simplest java-annotation type to add "//" before each line in your read file.</font><br/>
 3. Execute the plugin in the intellij idea menu: <em>Tools / Simi Initializer</em>, and then you can see the execution result prompt in the lower right corner. 
@@ -16,15 +16,15 @@ Prerequisite:<br/>
     </tr>
     <tr>
         <td>append-properties-folder </td>   
-        <td>Read all properties files in the directory and append them to the writing properties file.</td>
+        <td>Read all properties files in the directory and append them to the write properties file.</td>
     </tr>
     <tr>
         <td>append-properties</td>   
-        <td>Append a read properties file to the writing properties file</td>
+        <td>Append a read properties file to the write properties file</td>
     </tr>
     <tr>
         <td>replace-all</td>   
-        <td>Replace all content of the writing file with the read file.</td>
+        <td>Replace all content of the write file with the read file.</td>
     </tr>
     <tr>
         <td>replace-string</td>
@@ -64,7 +64,7 @@ Prerequisite:<br/>
 </table>
 
 #### global env:
-You can access the env variable in the <strong>simi-initializer.yml</strong> file,<br/> 
+You can access the env variables in the <strong>simi-initializer.yml</strong> file,<br/> 
 or in the <strong>xxx.rp</strong> file of the rp rules and the <strong>xxx.xml</strong> file of xml-append rule referenced in the simi-initializer.yml<br/>
 <table>
     <tr>
@@ -107,7 +107,7 @@ project:
      # check whether Maven project name is project name based on the pom file (Optional).
     pomProjectNameCheck: true        
     ruleList:
-      # Read all properties files in the directory and append them to the writing properties file.  
+      # Read all properties files in the directory and append them to the write properties file.  
       - type: append-properties-folder
         # The relative path to write the file.
         write: src/main/resources/application-local.properties
@@ -121,7 +121,7 @@ project:
         # It will determine whether it is the first write based on whether the backup file exists.
         once: true        
 
-      # Append a read properties file to the writing properties file 
+      # Append a read properties file to the write properties file 
       - type: append-properties
         # The relative path to write the file.
         write: src/main/resources/application-dev.properties
@@ -132,7 +132,7 @@ project:
         # It takes effect in the DEV and UAT environment and defaults to all environments.
         activeEnvList: DEV,UAT             
         
-      # Replace all content of the writing file with the read file.
+      # Replace all content of the write file with the read file.
       - type: replace-all 
         write: src/main/resources/logback.xml
         read: /${project.name}/logback.xml
